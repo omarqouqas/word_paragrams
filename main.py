@@ -41,8 +41,8 @@ def find_paragram(input_word):
 
     num_of_paragrams = count_of
     print("Paragrams of:", input_word, " = ", num_of_paragrams)
-    return "Number of Paragrams for: " + str(input_word) + " = " + str(num_of_paragrams) + "... Here They Are: "\
-           + str(values[paragram])
+    return "There are " + str(num_of_paragrams) + " Paragrams for " + "'\'" + str(input_word) + "'\'" + \
+           " ... Here They Are: " + str(''.join(values[paragram]))
 
 
 if __name__ == "__main__":
