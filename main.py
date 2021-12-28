@@ -33,16 +33,20 @@ def find_paragram(input_word):
     values = list(permutations(input_word, len(input_word)))
     print("Here is a list of the paragrams of the word " + input_word)
     count_of = 0
+    paragram_list = []
     for paragram in range(len(values)):
         print(''.join(values[paragram]))
         # return ''.join(values[paragram])
         count_of += 1
+        paragram_list.append(values)
+    print("list items \n")
+    print(paragram_list)
         # return ''.join(values[paragram])
 
     num_of_paragrams = count_of
     print("Paragrams of:", input_word, " = ", num_of_paragrams)
     return "There are " + str(num_of_paragrams) + " Paragrams for " + "'\'" + str(input_word) + "'\'" + \
-           " ... Here They Are: " + str(''.join(values[paragram]))
+           " ... Here They Are: " + str(paragram_list[paragram])
 
 
 if __name__ == "__main__":
