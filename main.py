@@ -39,9 +39,11 @@ def find_paragram(input_word):
         # return ''.join(values[paragram])
         count_of += 1
         paragram_list.append(values)
+    makeitastring = ','.join(str(e) for e in paragram_list)
     print("list items \n")
     print(paragram_list)
-        # return ''.join(values[paragram])
+    print("Type is ", type(paragram_list))
+    print("make it a string: " , makeitastring)
 
     num_of_paragrams = count_of
     print("Paragrams of:", input_word, " = ", num_of_paragrams)
