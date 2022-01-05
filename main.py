@@ -1,54 +1,51 @@
-from itertools import permutations, count
-from flask import Flask
-from flask import request
+import itertools
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
 
-@app.route("/")
+def find_paragrams(word: str) -> list:
+    word = word.lower()
+    '''Returns list of word paragrams'''
+
+    # Get permutations as list of tuples of letters
+    permutations = list(itertools.permutations(word, len(word)))
+
+    # Join tuples inside of list
+    permutations = [''.join(permutation_tuple)
+                    for permutation_tuple in permutations]
+
+    # Get rid of duplicates
+    permutations = list(set(permutations))
+
+    return permutations
+
+
+@app.route("/", methods=['GET', 'POST'])
 def index():
-    html_form = """
-        <html><body>
-            <h1> Enter a word to find its paragrams. App Engine is awesome! </h1>
-            <h2> This is the alteration of a letter or a series of letters in a word. </h2>
-            <br>
-            <br>
-            <form action="" method="GET">
-            Text: <input type="text" name="Paragrams">
-            <input type="submit" value="Find Paragrams">
-                </form>
-        </body></html>"""
-    input_word = request.args.get("Paragrams", "")
-    if input_word:
-        wordsparagrams = str(find_paragram(input_word))
-        # print(wordsparagrams)
-    else:
-        wordsparagrams = ""
+    # Default value in case if an empty string was passed into form
+    params = None
 
-    return html_form + wordsparagrams
+    # POST request on form submit
+    if request.method == 'POST':
+        # Get form data
+        word = request.form['paragrams']
 
+        paragrams_list = find_paragrams(word) if word else None
+        if paragrams_list:
+            paragrams_count = len(paragrams_list)
+            paragrams_str = ', '.join(paragrams_list)
 
-def find_paragram(input_word):
-    # input_word = input("Enter a word to find its paragrams\n")
-    values = list(permutations(input_word, len(input_word)))
-    print("Here is a list of the paragrams of the word " + input_word)
-    count_of = 0
-    paragram_list = []
-    for paragram in range(len(values)):
-        print(''.join(values[paragram]))
-        # return ''.join(values[paragram])
-        count_of += 1
-        paragram_list.append(values)
-    makeitastring = ','.join(str(e) for e in paragram_list)
-    print("list items \n")
-    print(paragram_list)
-    print("Type is ", type(paragram_list))
-    print("make it a string: " , makeitastring)
+            # Packing parameters in dict just to be clean
+            params = {
+                'paragrams_count': paragrams_count,
+                'word': word,
+                'paragrams_str': paragrams_str,
+                'paragrams_list': paragrams_list
+            }
 
-    num_of_paragrams = count_of
-    print("Paragrams of:", input_word, " = ", num_of_paragrams)
-    return "There are " + str(num_of_paragrams) + " Paragrams for " + "'\'" + str(input_word) + "'\'" + \
-           " ... Here They Are: " + str(paragram_list[paragram])
+    # Render html template with jinja rendering parameters
+    return render_template('index.html', params=params, )
 
 
 if __name__ == "__main__":
