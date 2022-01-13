@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 def find_paragrams(word: str) -> list:
     word = word.lower()
+    word = word.strip()
     '''Returns list of word paragrams'''
 
     # Get permutations as list of tuples of letters

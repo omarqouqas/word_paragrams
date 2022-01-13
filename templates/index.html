@@ -8,17 +8,18 @@
 
 <h1> Enter a word to find its paragrams.</h1>
 <h2> This is the alteration of a letter or a series of letters in a word. </h2>
+<h3> You can also enter numbers </h3>
 <br>
 <br>
 
 <form action="" method="POST">
-    Word: <input type="text" name="paragrams" class="input-text">
+    <b>Word/Numbers: </b> <input type="text" name="paragrams" class="input-text">
     <input type="submit" value="Find Paragrams" class="button">
 </form>
 <!-- Render inner html if params argument was not None -->
 {% if params %}
 <!-- Accessing params dict's values with params.key -->
-<p>There are <b class="count-value"> {{ params.paragrams_count }} </b> Paragrams for "{{ params.word }}"</p>
+<p>There are <b class="count-value"> {{ params.paragrams_count }} </b> Paragrams for "{{ params.word.lower().strip() }}"</p>
 <p><b>  In string format: </b></p>
 <b> {{ params.paragrams_str}} </b>
 <p><b>  In list format: </b></p>
